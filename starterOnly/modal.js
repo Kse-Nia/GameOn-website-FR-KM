@@ -32,115 +32,150 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
-// Form inputs validation
+// Verification
+function checkFirstName() {
+  const firstName = document.querySelector("#firstName"); // Get firstname
+  const firstNameError = document.getElementById("firstName-error"); // Get firstname error
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-
-  const firstName = document.querySelector("#firstName"); // Get user firstname
-  const lastName = document.querySelector("#lastName"); // Get user lastname
-  const email = document.querySelector("#email"); // Get user email
-  const emailRegex =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // Email regex verification
-
-  const birthDate = document.querySelector("#birthdate"); // Get user birthdate
-  const userLocation = document.querySelectorAll(
-    '.checkbox-input[name="location"]'
-  ); // Get user city
-  const quantity = document.querySelector("#quantity"); // Get user quantity tournaments
-  const checkbox1 = document.querySelector("#checkbox1"); // Get conditions checkbox
-  const checkboxNewslatter = document.querySelector("#checkbox2"); // Checkbox newsletters
-
-  // Error messages inputs
-  const firstNameError = document.getElementById("firstName-error"); // Get error message for firstname
-  const lastNameError = document.querySelectorAll("#lastName-error"); // Get error message for lastname
-  const birthDateError = document.getElementById("birthdate-error"); // Get error message for birthdate
-
-  const messageValidation = document.getElementById("message"); // Validation form message
-
-  // Verify firstname input
   if (firstName.value.length < 2) {
     const errorMessage = document.createElement("p");
     errorMessage.textContent =
       "Veuillez entrer 2 caractères ou plus pour le champ du prénom";
-    errorMessage.style.color = "red";
-    errorMessage.style.fontSize = "0.8rem";
     firstNameError.appendChild(errorMessage);
     return false;
   } else {
     firstNameError.innerHTML = "";
+    return true;
   }
-  // Verify lastname input
+}
+
+function checkLastName() {
+  const lastName = document.querySelector("#lastName"); // Get lastname
+  const lastNameError = document.getElementById("lastName-error");
+
   if (lastName.value.length < 2) {
-    lastNameError.innerHTML = "";
     const errorMessage = document.createElement("p");
     errorMessage.textContent =
       "Veuillez entrer 2 caractères ou plus pour le champ du nom";
     lastNameError.appendChild(errorMessage);
-    console.log("Veuillez entrer 2 caractères ou plus pour le champ du nom");
     return false;
   } else {
     lastNameError.innerHTML = "";
+    return true;
   }
-  // Verify email format
-  if (!emailRegex.test(email.value)) {
-    console.log("Un email valide est requis");
-    console.log(email.value);
-    return false;
-  }
+}
 
-  // Verify birthdate input
+function checkEmail() {
+  const email = document.querySelector("#email"); // Get email
+  const emailError = document.getElementById("email-error"); // Get email error
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // Email regex verification
+
+  if (!emailRegex.test(email.value)) {
+    const errorMessage = document.createElement("p");
+    errorMessage.textContent = "Veuillez entrer une adresse email valide";
+    emailError.appendChild(errorMessage);
+    return false;
+  } else {
+    console.log("Email valide");
+    return true;
+  }
+}
+
+function checkBirthDate() {
+  const birthDate = document.querySelector("#birthdate"); // Get birthdate
+  const birthDateError = document.getElementById("birthdate-error");
+
   if (!birthDate.value) {
     const errorMessage = document.createElement("p");
     errorMessage.textContent = "Vous devez entrer votre date de naissance";
-    errorMessage.style.color = "red";
-    errorMessage.style.fontSize = "0.8rem";
     birthDateError.appendChild(errorMessage);
-
-    console.log("Vous devez entrer votre date de naissance");
     return false;
+  } else {
+    birthDateError.innerHTML = "";
+    return true;
   }
+}
 
-  // Verify tournaments
+function checkQuantity() {
+  const quantity = document.querySelector("#quantity"); // Get quantity tournaments
+  const quantityError = document.getElementById("quantity-error");
+
   if (quantity.value < 0 || quantity.value === "" || isNaN(quantity.value)) {
-    console.log("Veillez saisir un nombre de tournois valide");
+    const errorMessage = document.createElement("p");
+    errorMessage.textContent = "Vous devez entrer un nombre";
+    quantityError.appendChild(errorMessage);
     return false;
+  } else {
+    quantityError.innerHTML = "";
+    return true;
   }
+}
 
-  // Location
+function checkLocation() {
+  const userLocation = document.querySelectorAll(
+    '.checkbox-input[name="location"]'
+  ); // Get user city
+  const locationError = document.getElementById("location-error");
+
   let checkedLocation = false;
   for (let i = 0; i < userLocation.length; i++) {
     if (userLocation[i].checked) {
       checkedLocation = true;
       console.log("Ville choisie", userLocation[i].value);
-      break;
+      return true;
     }
   }
   if (!checkedLocation) {
-    console.log("Veillez choisir une ville");
+    const errorMessage = document.createElement("p");
+    errorMessage.textContent = "Vous devez choisir une ville";
+    locationError.appendChild(errorMessage);
     return false;
   }
+}
 
-  // Check conditions
+function checkCredentials() {
+  const checkbox1 = document.querySelector("#checkbox1"); // Get conditions checkbox
+
   if (checkbox1.checked === false) {
     console.log("Veillez accepter les conditions");
     return false;
   } else if (checkbox1.checked === true) {
     console.log("Conditions acceptées");
+    return true;
   }
+}
 
-  // Check input newsletters
+function checkNewsletters() {
+  const checkboxNewslatter = document.querySelector("#checkbox2"); // Checkbox newsletters
   if (checkboxNewslatter.checked === true) {
     console.log("Vous êtes inscrit à la newsletter");
     return true;
   }
+}
 
-  // Send form
-  console.log("Formulaire envoyé");
+// Form inputs validation
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const messageValidation = document.getElementById("message"); // Validation form message
 
-  form.style.display = "none";
-  const validationText = document.createElement("p");
-  validationText.textContent = "Merci ! Votre réservation a été reçue.";
-  validationText.style.fontSize = "1rem";
-  messageValidation.appendChild(validationText);
+  const allInputs =
+    checkFirstName() &&
+    checkLastName() &&
+    checkEmail() &&
+    checkBirthDate() &&
+    checkQuantity() &&
+    checkLocation() &&
+    checkCredentials() &&
+    checkNewsletters();
+
+  if (allInputs) {
+    form.style.display = "none";
+    const validationText = document.createElement("p");
+    validationText.textContent = "Merci ! Votre réservation a été reçue.";
+    validationText.style.fontSize = "1rem";
+    messageValidation.appendChild(validationText);
+
+    console.log("Formulaire envoyé");
+  }
 });

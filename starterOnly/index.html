@@ -53,13 +53,7 @@
         <div class="content">
           <span class="close"></span>
           <div class="modal-body">
-            <form
-              id="form"
-              name="reserve"
-              action="index.html"
-              method="get"
-              onsubmit="return validate();"
-            >
+            <form id="form" name="reserve" action="index.html" method="get">
               <div class="formData">
                 <label>Prénom</label><br />
                 <input
@@ -114,6 +108,7 @@
                   min="0"
                   max="99"
                 />
+                <div id="quantity-error"></div>
               </div>
               <p class="text-label">
                 A quel tournoi souhaitez-vous participer cette année ?
@@ -185,6 +180,7 @@
                   <span class="checkbox-icon"></span>
                   Portland</label
                 >
+                <div id="location-error"></div>
               </div>
               <div class="formData">
                 <input
