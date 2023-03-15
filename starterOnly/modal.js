@@ -122,13 +122,14 @@ function checkLocation() {
   for (let i = 0; i < userLocation.length; i++) {
     if (userLocation[i].checked) {
       checkedLocation = true;
+      locationError.innerHTML = "";
       console.log("Ville choisie", userLocation[i].value);
       return true;
     }
   }
   if (!checkedLocation) {
     const errorMessage = document.createElement("p");
-    errorMessage.textContent = "Vous devez choisir une ville";
+    errorMessage.textContent = "Vous devez choisir une option";
     locationError.appendChild(errorMessage);
     return false;
   }
@@ -136,12 +137,17 @@ function checkLocation() {
 
 function checkCredentials() {
   const checkbox1 = document.querySelector("#checkbox1"); // Get conditions checkbox
+  const credentialsError = document.getElementById("credential-error");
 
   if (checkbox1.checked === false) {
-    console.log("Veillez accepter les conditions");
+    const errorMessage = document.createElement("p");
+    errorMessage.textContent =
+      "Vous devez vérifier que vous acceptez les termes et conditions.";
+    credentialsError.appendChild(errorMessage);
     return false;
   } else if (checkbox1.checked === true) {
     console.log("Conditions acceptées");
+    credentialsError.innerHTML = "";
     return true;
   }
 }
@@ -150,6 +156,8 @@ function checkNewsletters() {
   const checkboxNewslatter = document.querySelector("#checkbox2"); // Checkbox newsletters
   if (checkboxNewslatter.checked === true) {
     console.log("Vous êtes inscrit à la newsletter");
+    return true;
+  } else {
     return true;
   }
 }
@@ -172,10 +180,12 @@ form.addEventListener("submit", function (e) {
   if (allInputs) {
     form.style.display = "none";
     const validationText = document.createElement("p");
-    validationText.textContent = "Merci ! Votre réservation a été reçue.";
-    validationText.style.fontSize = "1rem";
+    const closeFormBtn = document.createElement("button");
+    closeFormBtn.classList.add("close-validation");
+    validationText.textContent = "Merci pour votre inscription";
+    closeFormBtn.textContent = "Fermer";
+    closeFormBtn.addEventListener("click", closeModal);
     messageValidation.appendChild(validationText);
-
-    console.log("Formulaire envoyé");
+    messageValidation.appendChild(closeFormBtn);
   }
 });
