@@ -58,10 +58,8 @@
               name="reserve"
               action="index.html"
               method="get"
-              <!--onsubmit="return validate();"
-              --
+              onsubmit="return validate();"
             >
-              >
               <div class="formData">
                 <label>Prénom</label><br />
                 <input
@@ -69,10 +67,8 @@
                   type="text"
                   id="firstName"
                   name="firstName"
-                  minlength="2"
-                  required
                 /><br />
-                <p class="firstName-error"></p>
+                <div id="firstName-error"></div>
               </div>
               <div class="formData">
                 <label>Nom</label><br />
@@ -82,9 +78,8 @@
                   id="lastName"
                   name="lastName"
                   minlength="2"
-                  required
                 /><br />
-                <p id="lastName-error" style="color: red; display: none"></p>
+                <div id="lastName-error"></div>
               </div>
               <div class="formData">
                 <label>E-mail</label><br />
@@ -94,7 +89,7 @@
                   id="email"
                   name="email"
                 /><br />
-                <p id="email-error"></p>
+                <div id="email-error"></div>
               </div>
               <div class="formData">
                 <label>Date de naissance</label><br />
@@ -104,7 +99,7 @@
                   id="birthdate"
                   name="birthdate"
                 /><br />
-                <p class="birthdate-error"></p>
+                <div id="birthdate-error"></div>
               </div>
               <div class="formData">
                 <label
@@ -219,6 +214,7 @@
                 Valider
               </button>
             </form>
+            <div id="message"></div>
           </div>
         </div>
       </div>

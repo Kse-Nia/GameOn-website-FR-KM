@@ -10,6 +10,7 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
+const modalBody = document.querySelector(".modal-body");
 const formData = document.querySelectorAll(".formData");
 
 const closeBtn = document.querySelectorAll(".close"); // Get close modal button
@@ -45,29 +46,37 @@ form.addEventListener("submit", function (e) {
   const birthDate = document.querySelector("#birthdate"); // Get user birthdate
   const userLocation = document.querySelectorAll(
     '.checkbox-input[name="location"]'
-  );
+  ); // Get user city
   const quantity = document.querySelector("#quantity"); // Get user quantity tournaments
   const checkbox1 = document.querySelector("#checkbox1"); // Get conditions checkbox
   const checkboxNewslatter = document.querySelector("#checkbox2"); // Checkbox newsletters
 
   // Error messages inputs
-  const firstNameError = document.querySelectorAll("#firstName-error"); // Get error message for firstname
+  const firstNameError = document.getElementById("firstName-error"); // Get error message for firstname
   const lastNameError = document.querySelectorAll("#lastName-error"); // Get error message for lastname
-  const birthDateError = document.querySelectorAll("#birthdate-error"); // Get error message for birthdate
+  const birthDateError = document.getElementById("birthdate-error"); // Get error message for birthdate
+
+  const messageValidation = document.getElementById("message"); // Validation form message
 
   // Verify firstname input
   if (firstName.value.length < 2) {
-    firstNameError.innerHTML =
+    const errorMessage = document.createElement("p");
+    errorMessage.textContent =
       "Veuillez entrer 2 caractères ou plus pour le champ du prénom";
-    console.log("Veuillez entrer 2 caractères ou plus pour le champ du prénom");
+    errorMessage.style.color = "red";
+    errorMessage.style.fontSize = "0.8rem";
+    firstNameError.appendChild(errorMessage);
     return false;
   } else {
     firstNameError.innerHTML = "";
   }
   // Verify lastname input
   if (lastName.value.length < 2) {
-    lastNameError.innerHTML =
+    lastNameError.innerHTML = "";
+    const errorMessage = document.createElement("p");
+    errorMessage.textContent =
       "Veuillez entrer 2 caractères ou plus pour le champ du nom";
+    lastNameError.appendChild(errorMessage);
     console.log("Veuillez entrer 2 caractères ou plus pour le champ du nom");
     return false;
   } else {
@@ -82,7 +91,12 @@ form.addEventListener("submit", function (e) {
 
   // Verify birthdate input
   if (!birthDate.value) {
-    birthDateError.innerHTML = "Veillez entrer votre date de naissance";
+    const errorMessage = document.createElement("p");
+    errorMessage.textContent = "Vous devez entrer votre date de naissance";
+    errorMessage.style.color = "red";
+    errorMessage.style.fontSize = "0.8rem";
+    birthDateError.appendChild(errorMessage);
+
     console.log("Vous devez entrer votre date de naissance");
     return false;
   }
@@ -123,5 +137,10 @@ form.addEventListener("submit", function (e) {
 
   // Send form
   console.log("Formulaire envoyé");
-  form.submit();
+
+  form.style.display = "none";
+  const validationText = document.createElement("p");
+  validationText.textContent = "Merci ! Votre réservation a été reçue.";
+  validationText.style.fontSize = "1rem";
+  messageValidation.appendChild(validationText);
 });
