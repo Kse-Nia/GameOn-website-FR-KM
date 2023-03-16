@@ -33,9 +33,19 @@ function closeModal() {
 }
 
 // Verification
+
+// clear error messages
+function clearErrorMessages(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+
 function checkFirstName() {
   const firstName = document.querySelector("#firstName"); // Get firstname
   const firstNameError = document.getElementById("firstName-error"); // Get firstname error
+
+  clearErrorMessages(firstNameError);
 
   if (firstName.value.length < 2) {
     const errorMessage = document.createElement("p");
@@ -52,6 +62,8 @@ function checkFirstName() {
 function checkLastName() {
   const lastName = document.querySelector("#lastName"); // Get lastname
   const lastNameError = document.getElementById("lastName-error");
+
+  clearErrorMessages(lastNameError);
 
   if (lastName.value.length < 2) {
     const errorMessage = document.createElement("p");
@@ -71,6 +83,8 @@ function checkEmail() {
   const emailRegex =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // Email regex verification
 
+  clearErrorMessages(emailError);
+
   if (!emailRegex.test(email.value)) {
     const errorMessage = document.createElement("p");
     errorMessage.textContent = "Veuillez entrer une adresse email valide";
@@ -84,22 +98,37 @@ function checkEmail() {
 
 function checkBirthDate() {
   const birthDate = document.querySelector("#birthdate"); // Get birthdate
+  const currentDate = new Date();
+
+  const errorMessage = document.createElement("p");
   const birthDateError = document.getElementById("birthdate-error");
 
+  clearErrorMessages(birthDateError);
+
   if (!birthDate.value) {
-    const errorMessage = document.createElement("p");
     errorMessage.textContent = "Vous devez entrer votre date de naissance";
     birthDateError.appendChild(errorMessage);
     return false;
   } else {
-    birthDateError.innerHTML = "";
-    return true;
+    const birthDateObj = new Date(birthDate.value);
+
+    if (birthDateObj > currentDate) {
+      errorMessage.textContent =
+        "La date de naissance ne peut pas être supérieure à aujourd'hui";
+      birthDateError.appendChild(errorMessage);
+      return false;
+    } else {
+      birthDateError.innerHTML = "";
+      return true;
+    }
   }
 }
 
 function checkQuantity() {
   const quantity = document.querySelector("#quantity"); // Get quantity tournaments
   const quantityError = document.getElementById("quantity-error");
+
+  clearErrorMessages(quantityError);
 
   if (quantity.value < 0 || quantity.value === "" || isNaN(quantity.value)) {
     const errorMessage = document.createElement("p");
@@ -117,6 +146,8 @@ function checkLocation() {
     '.checkbox-input[name="location"]'
   ); // Get user city
   const locationError = document.getElementById("location-error");
+
+  clearErrorMessages(locationError);
 
   let checkedLocation = false;
   for (let i = 0; i < userLocation.length; i++) {
@@ -138,6 +169,8 @@ function checkLocation() {
 function checkCredentials() {
   const checkbox1 = document.querySelector("#checkbox1"); // Get conditions checkbox
   const credentialsError = document.getElementById("credential-error");
+
+  clearErrorMessages(credentialsError);
 
   if (checkbox1.checked === false) {
     const errorMessage = document.createElement("p");
