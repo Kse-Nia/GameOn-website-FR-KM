@@ -32,8 +32,6 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
-// Verification
-
 // clear error messages
 function clearErrorMessages(element) {
   while (element.firstChild) {
@@ -42,56 +40,54 @@ function clearErrorMessages(element) {
 }
 
 function checkFirstName() {
-  const firstName = document.querySelector("#firstName"); // Get firstname
-  const firstNameError = document.getElementById("firstName-error"); // Get firstname error
+  const firstName = document.querySelector("#firstName");
+  const formData = firstName.closest(".formData");
 
-  clearErrorMessages(firstNameError);
+  // Clear error messages
+  formData.setAttribute("data-error-visible", false);
 
   if (firstName.value.length < 2) {
-    const errorMessage = document.createElement("p");
-    errorMessage.textContent =
+    const errorMessage =
       "Veuillez entrer 2 caractères ou plus pour le champ du prénom";
-    firstNameError.appendChild(errorMessage);
+    formData.setAttribute("data-error", errorMessage);
+    formData.setAttribute("data-error-visible", true);
     return false;
   } else {
-    firstNameError.innerHTML = "";
     return true;
   }
 }
 
 function checkLastName() {
   const lastName = document.querySelector("#lastName"); // Get lastname
-  const lastNameError = document.getElementById("lastName-error");
+  const formData = lastName.closest(".formData");
 
-  clearErrorMessages(lastNameError);
+  formData.setAttribute("data-error-visible", false);
 
   if (lastName.value.length < 2) {
-    const errorMessage = document.createElement("p");
-    errorMessage.textContent =
+    const errorMessage =
       "Veuillez entrer 2 caractères ou plus pour le champ du nom";
-    lastNameError.appendChild(errorMessage);
+    formData.setAttribute("data-error", errorMessage);
+    formData.setAttribute("data-error-visible", true);
     return false;
   } else {
-    lastNameError.innerHTML = "";
     return true;
   }
 }
 
 function checkEmail() {
   const email = document.querySelector("#email"); // Get email
-  const emailError = document.getElementById("email-error"); // Get email error
+  const formData = email.closest(".formData");
   const emailRegex =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // Email regex verification
 
-  clearErrorMessages(emailError);
+  formData.setAttribute("data-error-visible", false);
 
   if (!emailRegex.test(email.value)) {
-    const errorMessage = document.createElement("p");
-    errorMessage.textContent = "Veuillez entrer une adresse email valide";
-    emailError.appendChild(errorMessage);
+    const errorMessage = "Veuillez entrer une adresse email valide";
+    formData.setAttribute("data-error", errorMessage);
+    formData.setAttribute("data-error-visible", true);
     return false;
   } else {
-    console.log("Email valide");
     return true;
   }
 }
@@ -99,26 +95,25 @@ function checkEmail() {
 function checkBirthDate() {
   const birthDate = document.querySelector("#birthdate"); // Get birthdate
   const currentDate = new Date();
+  const formData = birthDate.closest(".formData");
 
-  const errorMessage = document.createElement("p");
-  const birthDateError = document.getElementById("birthdate-error");
-
-  clearErrorMessages(birthDateError);
+  formData.setAttribute("data-error-visible", false);
 
   if (!birthDate.value) {
-    errorMessage.textContent = "Vous devez entrer votre date de naissance";
-    birthDateError.appendChild(errorMessage);
+    const errorMessage = "Vous devez entrer votre date de naissance";
+    formData.setAttribute("data-error", errorMessage);
+    formData.setAttribute("data-error-visible", true);
     return false;
   } else {
     const birthDateObj = new Date(birthDate.value);
 
     if (birthDateObj > currentDate) {
-      errorMessage.textContent =
+      const errorMessage =
         "La date de naissance ne peut pas être supérieure à aujourd'hui";
-      birthDateError.appendChild(errorMessage);
+      formData.setAttribute("data-error", errorMessage);
+      formData.setAttribute("data-error-visible", true);
       return false;
     } else {
-      birthDateError.innerHTML = "";
       return true;
     }
   }
@@ -126,17 +121,16 @@ function checkBirthDate() {
 
 function checkQuantity() {
   const quantity = document.querySelector("#quantity"); // Get quantity tournaments
-  const quantityError = document.getElementById("quantity-error");
+  const formData = quantity.closest(".formData");
 
-  clearErrorMessages(quantityError);
+  formData.setAttribute("data-error-visible", false);
 
   if (quantity.value < 0 || quantity.value === "" || isNaN(quantity.value)) {
-    const errorMessage = document.createElement("p");
-    errorMessage.textContent = "Vous devez entrer un nombre";
-    quantityError.appendChild(errorMessage);
+    const errorMessage = "Vous devez entrer un nombre";
+    formData.setAttribute("data-error", errorMessage);
+    formData.setAttribute("data-error-visible", true);
     return false;
   } else {
-    quantityError.innerHTML = "";
     return true;
   }
 }
@@ -154,7 +148,6 @@ function checkLocation() {
     if (userLocation[i].checked) {
       checkedLocation = true;
       locationError.innerHTML = "";
-      console.log("Ville choisie", userLocation[i].value);
       return true;
     }
   }
