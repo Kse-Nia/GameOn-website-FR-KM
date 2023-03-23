@@ -138,13 +138,20 @@ main {
 }
 
 /* Modal form */
-
+.button-container {
+  display: flex;
+  justify-content: center;
+}
 .button {
+  box-shadow: none;
+  min-width: 140px;
+  min-height: 30px;
   background: #fe142f;
   margin-top: 0.5em;
-  padding: 1em;
+  padding: 2% 10% 2%;
   color: #fff;
-  border-radius: 15px;
+  border-radius: 10px;
+  border: none;
   cursor: pointer;
   font-size: 16px;
 }
@@ -153,10 +160,6 @@ main {
   background: #3876ac;
 }
 
-/* .smFont {
-  font-size: 16px;
-}
- */
 .bground {
   display: none;
   position: fixed;
@@ -181,21 +184,27 @@ main {
   overflow: hidden;
   position: relative;
   color: #fff;
-  padding-top: 10px;
 }
 
 @media screen and (max-width: 750px) {
   .content {
     min-width: 100%;
-    height: auto;
-    margin: 70px 0 0;
+    overflow-y: auto;
+    margin: 60px 0 0;
     border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
   }
 }
 
 .modal-body {
   padding: 15px 8%;
   margin: 15px auto;
+}
+@media screen and (max-width: 750px) {
+  .modal-body {
+    padding-top: 10%;
+  }
 }
 
 label {
@@ -220,7 +229,7 @@ input {
 }
 .formData[data-error]::after {
   content: attr(data-error);
-  font-size: 0.4em;
+  font-size: 0.6em;
   color: #e54858;
   display: block;
   margin-top: 7px;
@@ -402,7 +411,7 @@ input {
 .hero-text {
   width: 146%;
   font-weight: normal;
-  margin-top: 57px;
+  margin-top: 40px;
   padding: 0;
 }
 .btn-signup {
